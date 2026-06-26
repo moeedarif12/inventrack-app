@@ -4,7 +4,7 @@ import { cn, getInitials } from '@/lib/utils';
 import {
   LayoutDashboard, Package, Tag, Users, ShoppingCart,
   BarChart3, Settings, LogOut, Boxes, ChevronRight,
-  Layers, Shield
+  Layers
 } from 'lucide-react';
 
 import { Building2 } from 'lucide-react';
