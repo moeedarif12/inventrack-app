@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { productAPI, categoryAPI } from '@/lib/api';
 import type { Product, Category } from '@/types';
-import { formatCurrency, getStockStatusColor } from '@/lib/utils';
+import { formatCurrency, getStockStatusColor, getProductImageUrl } from '@/lib/utils';
 import { Plus, Edit, Trash2, Search, Package, Image as ImageIcon, Eye } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
@@ -271,7 +271,7 @@ export default function ProductsPage() {
                       <td className="p-4 flex items-center gap-3">
                         <div className="w-10 h-10 rounded-lg bg-secondary border border-border flex items-center justify-center overflow-hidden flex-shrink-0">
                           {mainImage ? (
-                            <img src={mainImage.startsWith('http') ? mainImage : `${import.meta.env.VITE_API_URL || ''}${mainImage}`} alt={p.name} className="w-full h-full object-cover" />
+                            <img src={getProductImageUrl(mainImage)} alt={p.name} className="w-full h-full object-cover" />
                           ) : (
                             <ImageIcon className="w-5 h-5 text-muted-foreground" />
                           )}
@@ -475,7 +475,7 @@ export default function ProductsPage() {
                 <div className="flex gap-2 flex-wrap mt-3">
                   {imagePreviews.map((preview, i) => (
                     <div key={i} className="relative w-16 h-16 rounded-lg border border-border overflow-hidden">
-                      <img src={preview.startsWith('http') || preview.startsWith('/uploads') ? (preview.startsWith('http') ? preview : `${import.meta.env.VITE_API_URL || ''}${preview}`) : preview} alt="Preview" className="w-full h-full object-cover" />
+                      <img src={preview.startsWith('blob:') ? preview : getProductImageUrl(preview)} alt="Preview" className="w-full h-full object-cover" />
                       <button
                         type="button"
                         onClick={() => removeSelectedImage(i)}

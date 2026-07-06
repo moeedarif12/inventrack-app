@@ -78,3 +78,13 @@ export function debounce<T extends (...args: any[]) => void>(fn: T, delay: numbe
     timer = setTimeout(() => fn(...args), delay);
   }) as T;
 }
+
+export function getProductImageUrl(imagePath: string | null | undefined): string {
+  if (!imagePath) return '';
+  if (imagePath.startsWith('http')) return imagePath;
+
+  const apiURL = import.meta.env.VITE_API_URL || '';
+  const baseURL = apiURL.endsWith('/api') ? apiURL.slice(0, -4) : apiURL;
+  return `${baseURL}${imagePath}`;
+}
+

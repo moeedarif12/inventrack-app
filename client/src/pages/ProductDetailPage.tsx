@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { productAPI, inventoryAPI } from '@/lib/api';
 import type { Product, InventoryLog } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
-import { formatCurrency, formatDate, getStockStatusColor, getStockStatusLabel } from '@/lib/utils';
+import { formatCurrency, formatDate, getStockStatusColor, getStockStatusLabel, getProductImageUrl } from '@/lib/utils';
 import { ArrowLeft, Package, TrendingUp, History, Plus, Minus, Settings, Barcode, Image as ImageIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -121,7 +121,7 @@ export default function ProductDetailPage() {
               <div className="w-full md:w-48 h-48 rounded-xl bg-secondary border border-border flex items-center justify-center overflow-hidden flex-shrink-0">
                 {product.images && product.images.length > 0 ? (
                   <img
-                    src={product.images[0].startsWith('http') ? product.images[0] : `${import.meta.env.VITE_API_URL || ''}${product.images[0]}`}
+                    src={getProductImageUrl(product.images[0])}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
