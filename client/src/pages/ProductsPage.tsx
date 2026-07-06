@@ -97,8 +97,23 @@ export default function ProductsPage() {
     }
   };
 
-  const removeSelectedImage = (index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+  const removeSelectedImage = async (index: number) => {
+    const previewUrl = imagePreviews[index];
+    if (editId && !previewUrl.startsWith('blob:')) {
+      try {
+        await productAPI.deleteImage(editId, previewUrl);
+        toast.success('Image removed from server');
+      } catch {
+        toast.error('Failed to remove image');
+        return;
+      }
+    } else {
+      const existingCount = imagePreviews.filter(p => !p.startsWith('blob:')).length;
+      const newFileIndex = index - existingCount;
+      if (newFileIndex >= 0) {
+        setImages(prev => prev.filter((_, i) => i !== newFileIndex));
+      }
+    }
     setImagePreviews(prev => prev.filter((_, i) => i !== index));
   };
 
