@@ -1,5 +1,5 @@
-﻿import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import api from "@/lib/axios";
 import { useAuth } from "@/contexts/AuthContext";
 import { AlertCircle, Building2, Edit, Trash2, X, Save } from "lucide-react";
 import toast from "react-hot-toast";
@@ -27,9 +27,7 @@ export default function AdminCustomersPage() {
   const fetchUsers = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get("http://localhost:5000/api/admin/customers", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get("/admin/customers");
       setUsers(res.data.data);
       setError("");
     } catch (err: any) {
@@ -50,9 +48,7 @@ export default function AdminCustomersPage() {
     if (!editingUser) return;
     setSaving(true);
     try {
-      await axios.put(`http://localhost:5000/api/admin/users/${editingUser._id}/role`, { role: editRole }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.put(`/admin/users/${editingUser._id}/role`, { role: editRole });
       toast.success("User role updated");
       setEditingUser(null);
       fetchUsers();
@@ -70,9 +66,7 @@ export default function AdminCustomersPage() {
     }
     if (!window.confirm("Are you sure you want to delete this user? This cannot be undone.")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/admin/users/${id}`);
       toast.success("User deleted");
       fetchUsers();
     } catch (err: any) {
