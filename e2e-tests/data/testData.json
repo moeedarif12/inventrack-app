@@ -1,0 +1,40 @@
+{
+  "auth": {
+    "valid": {
+      "email": "owner1@example.com",
+      "password": "owner123"
+    },
+    "invalid": {
+      "email": "invalid@example.com",
+      "password": "wrongpassword"
+    }
+  },
+  "product": {
+    "name": "Playwright Test Product",
+    "description": "Automated E2E Product description",
+    "buyingPrice": 150,
+    "sellingPrice": 250,
+    "currentStock": 50,
+    "minimumStock": 5,
+    "unit": "pcs",
+    "barcode": "123456789012"
+  },
+  "category": {
+    "name": "E2E Testing Category",
+    "description": "Category created during automated test execution",
+    "color": "#9333ea"
+  },
+  "customer": {
+    "name": "E2E Test Customer",
+    "email": "e2e_cust@example.com",
+    "phone": "03001234567",
+    "address": "123 Test Street, Lahore"
+  },
+  "business": {
+    "name": "Playwright QA Store",
+    "phone": "03009876543",
+    "taxRate": 8,
+    "currency": "PKR",
+    "lowStockThreshold": 12
+  }
+}

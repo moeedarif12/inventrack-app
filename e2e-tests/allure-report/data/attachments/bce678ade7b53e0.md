@@ -1,0 +1,156 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: dashboard.spec.ts >> Dashboard Page >> should display total sales and warnings metrics
+- Location: specs\dashboard.spec.ts:13:7
+
+# Error details
+
+```
+Error: expect(locator).toBeVisible() failed
+
+Locator: locator('text=Stock Alert').first()
+Expected: visible
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" with timeout 5000ms
+  - waiting for locator('text=Stock Alert').first()
+
+```
+
+```yaml
+- complementary:
+  - heading "InvenTrack" [level=1]
+  - paragraph: Business Suite
+  - text: S
+  - paragraph: Supermart
+  - paragraph: supermart@example.com
+  - navigation:
+    - paragraph: Menu
+    - link "Dashboard":
+      - /url: /dashboard
+    - link "Categories":
+      - /url: /categories
+    - link "Products":
+      - /url: /products
+    - link "Inventory":
+      - /url: /inventory
+    - link "Customers":
+      - /url: /customers
+    - link "Sales":
+      - /url: /sales
+    - link "Reports":
+      - /url: /reports
+    - link "Settings":
+      - /url: /settings
+  - text: JD
+  - paragraph: John Doe
+  - paragraph: owner
+  - button "Sign Out"
+- banner:
+  - heading "Dashboard" [level=2]
+  - button
+  - button
+  - text: JO
+  - paragraph: John
+  - paragraph: owner
+- main:
+  - heading "Welcome back, John Doe! 👋" [level=1]
+  - paragraph: Supermart — Here's what's happening today.
+  - link "New Sale":
+    - /url: /sales
+  - paragraph: Total Products
+  - paragraph: "2"
+  - text: +12% vs last month
+  - paragraph: Total Categories
+  - paragraph: "2"
+  - paragraph: Total Customers
+  - paragraph: "1"
+  - text: +8% vs last month
+  - paragraph: Total Sales
+  - paragraph: "1"
+  - text: +15% vs last month
+  - paragraph: Monthly Revenue
+  - paragraph: Rs 2,888
+  - text: 0% vs last month
+  - paragraph: Inventory Value
+  - paragraph: Rs 54,400
+  - paragraph: Low Stock Items
+  - paragraph: "0"
+  - paragraph: Out of Stock
+  - paragraph: "0"
+  - heading "Revenue Overview" [level=3]
+  - paragraph: Sales performance over time
+  - combobox:
+    - option "Last 7 days"
+    - option "Last 30 days" [selected]
+    - option "Last 90 days"
+  - application: Jun 11 Jun 14 Jun 17 Jun 20 Jun 23 Jun 26 Jun 29 Jul 2 Jul 4 Jul 6 Jul 9 Rs 0 Rs 750 Rs 1,500 Rs 2,250 Rs 3,000
+  - heading "Category Breakdown" [level=3]
+  - paragraph: Revenue by category
+  - list:
+    - listitem:
+      - img "Beverages legend icon"
+      - text: Beverages
+    - listitem:
+      - img "Groceries legend icon"
+      - text: Groceries
+  - application
+  - heading "Recent Sales" [level=3]
+  - link "View all":
+    - /url: /sales
+  - link "INV-SM-001 Imran Khan · 2d ago Rs 2,888 completed":
+    - /url: /sales/6a4c06bdb0184fd3a33322da
+    - paragraph: INV-SM-001
+    - paragraph: Imran Khan · 2d ago
+    - paragraph: Rs 2,888
+    - text: completed
+  - heading "Inventory Activity" [level=3]
+  - link "View all":
+    - /url: /inventory
+  - paragraph: Coca Cola 1.5L
+  - paragraph: sale · 2d ago
+  - text: "-5"
+  - paragraph: Basmati Rice 5kg
+  - paragraph: sale · 2d ago
+  - text: "-2"
+  - paragraph: Coca Cola 1.5L
+  - paragraph: initial · 2d ago
+  - text: "+125"
+  - paragraph: Basmati Rice 5kg
+  - paragraph: initial · 2d ago
+  - text: "+52"
+```
+
+# Test source
+
+```ts
+  1  | import { Page, expect } from "@playwright/test";
+  2  | 
+  3  | export class DashboardPage {
+  4  |   readonly page: Page;
+  5  | 
+  6  |   constructor(page: Page) {
+  7  |     this.page = page;
+  8  |   }
+  9  | 
+  10 |   async verifyDashboardLoaded() {
+  11 |     await expect(this.page).toHaveURL(/\/dashboard/);
+  12 |     await expect(this.page.locator("text=Welcome back").first()).toBeVisible();
+  13 |   }
+  14 | 
+  15 |   async verifyMetricsVisible() {
+  16 |     await expect(this.page.locator("text=Total Sales").first()).toBeVisible();
+> 17 |     await expect(this.page.locator("text=Stock Alert").first()).toBeVisible();
+     |                                                                 ^ Error: expect(locator).toBeVisible() failed
+  18 |   }
+  19 | }
+  20 | 
+```

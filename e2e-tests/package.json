@@ -1,0 +1,16 @@
+{
+  "name": "e2e-tests",
+  "version": "1.0.0",
+  "description": "E2E Playwright test suite with Allure Reports",
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.0.7",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "report:generate": "allure generate allure-results --clean -o allure-report",
+    "report:open": "allure open allure-report"
+  }
+}
